@@ -1,0 +1,683 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: #1c1c1c;
+      font-family: sans-serif;
+      font-size: 16px;
+      color: #f2f2f2;
+    }
+
+    .custom-container {
+      background-color: #2b2b2b;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 0 auto;
+      margin-top: 50px;
+      max-width: 400px;
+    }
+
+    .custom-button {
+      background-color: #ff8c00;
+      color: #f2f2f2;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .custom-button:hover {
+      background-color: #f2f2f2;
+      color: #ff8c00;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #f2f2f2;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 20px;
+      background-color: #2b2b2b;
+      color: #f2f2f2;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+
+
+    form-group {
+      margin-bottom: 15px;
+    }
+
+    /* Styling for the label */
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: white;
+      /* Label text color */
+    }
+
+    /* Styling for the input field */
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      background-color: #2b2b2b;
+      /* Black background color for the input field */
+      color: white;
+      /* Text color in the input field */
+    }
+
+    /* Optional: Placeholder text color for modern browsers */
+    ::placeholder {
+      color: #ccc;
+    }
+
+
+    .loading-animation {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 9999;
+    }
+
+    .loading-animation.show {
+      display: block;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .row {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+        }
+      
+        .col-md-3 {
+          flex-basis: 25%;
+          max-width: 25%;
+          padding: 8px;
+          position: relative;
+        }
+      
+        .img-fluid {
+          max-width: 100%;
+          height: auto;
+        }
+      
+        .download-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background-color: #ffffff;
+          padding: 4px 8px;
+          border: none;
+          border-radius: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          cursor: pointer;
+        }
+  </style>
+
+  
+</head>
+
+<body>
+
+  <div class="loading-animation">Loading...</div>
+  <div class="custom-container">
+    <h2 style="color:#f2f2f2;"></h2>
+    <form onsubmit="handleSubmit(event)">
+      
+      <div class="form-group">
+        <label for="imageNumber">Number of Images:</label>
+        <input type="number" id="imageNumber" placeholder="Enter number">
+      </div>
+
+
+
+
+      <div class="form-group">
+        <label for="imageType">Female Outfit Type:</label>
+        <select id="imageType">
+          <option value="formal dress">Formal Dress</option>
+          <option value="casual dress">Casual Dress</option>
+          <option value="suit dress">Suit Dress</option>
+          <option value="semi formal dress">Semi Formal Dress</option>
+          <option value="t-shirt dress">T-Shirt Dress</option>
+          <option value="party dress">Party Dress</option>
+          <option value="cocktail dress">Cocktail Dress</option>
+          <option value="ballgown">Ballgown</option>
+          <option value="maxi dress">Maxi Dress</option>
+          <option value="a-line dress">A-Line Dress</option>
+          <option value="sheath dress">Sheath Dress</option>
+          <option value="empire waist dress">Empire Waist Dress</option>
+          <option value="shift dress">Shift Dress</option>
+          <option value="wrap dress">Wrap Dress</option>
+          <option value="peplum dress">Peplum Dress</option>
+          <option value="skater dress">Skater Dress</option>
+          <option value="midi dress">Midi Dress</option>
+          <option value="bodycon dress">Bodycon Dress</option>
+          <option value="sundress">Sundress</option>
+          <option value="shirt dress">Shirt Dress</option>
+          <option value="denim dress">Denim Dress</option>
+          <option value="off-shoulder dress">Off-Shoulder Dress</option>
+          <option value="halter neck dress">Halter Neck Dress</option>
+          <option value="peasant dress">Peasant Dress</option>
+          <option value="kimono dress">Kimono Dress</option>
+          <option value="fit and flare dress">Fit and Flare Dress</option>
+          <option value="mermaid dress">Mermaid Dress</option>
+          <option value="one-shoulder dress">One-Shoulder Dress</option>
+          <option value="high-low dress">High-Low Dress</option>
+          <option value="tiered dress">Tiered Dress</option>
+          <option value="balloon dress">Balloon Dress</option>
+          <option value="babydoll dress">Babydoll Dress</option>
+          <option value="flapper dress">Flapper Dress</option>
+          <option value="bandage dress">Bandage Dress</option>
+          <option value="grecian dress">Grecian Dress</option>
+          <option value="jumpsuit dress">Jumpsuit Dress</option>
+          <option value="cut-out dress">Cut-Out Dress</option>
+          <option value="ruched dress">Ruched Dress</option>
+          <option value="sequin dress">Sequin Dress</option>
+          <option value="asymmetrical dress">Asymmetrical Dress</option>
+          <option value="empire dress">Empire Dress</option>
+          <option value="pleated dress">Pleated Dress</option>
+          <option value="ruffle dress">Ruffle Dress</option>
+          <option value="cape dress">Cape Dress</option>
+          <option value="tulle dress">Tulle Dress</option>
+          <option value="boho dress">Boho Dress</option>
+          <option value="vintage dress">Vintage Dress</option>
+          <option value="fringe dress">Fringe Dress</option>
+          <option value="military dress">Military Dress</option>
+          <option value="cami dress">Cami Dress</option>
+          <option value="pinafore dress">Pinafore Dress</option>
+          <option value="cold shoulder dress">Cold Shoulder Dress</option>
+          <option value="corset dress">Corset Dress</option>
+          <option value="collared dress">Collared Dress</option>
+          <option value="prairie dress">Prairie Dress</option>
+          <option value="overall dress">Overall Dress</option>
+          <option value="blouson dress">Blouson Dress</option>
+          <option value="palazzo dress">Palazzo Dress</option>
+          <option value="cowl neck dress">Cowl Neck Dress</option>
+          <option value="trench dress">Trench Dress</option>
+          <option value="cargo dress">Cargo Dress</option>
+          <option value="salwar dress">Salwar Dress</option>
+          <option value="abaya dress">Abaya Dress</option>
+          <option value="dashiki dress">Dashiki Dress</option>
+          <option value="caftan dress">Caftan Dress</option>
+          <option value="qipao dress">Qipao Dress</option>
+          <option value="sari dress">Sari Dress</option>
+          <option value="dirndl dress">Dirndl Dress</option>
+          <option value="hmong dress">Hmong Dress</option>
+          <option value="kente dress">Kente Dress</option>
+          <option value="cheongsam dress">Cheongsam Dress</option>
+          <option value="thobe dress">Thobe Dress</option>
+          <option value="hanbok dress">Hanbok Dress</option>
+          <option value="kurta dress">Kurta Dress</option>
+          <option value="kaftan dress">Kaftan Dress</option>
+          <option value="maori dress">Maori Dress</option>
+          <option value="baju kurung dress">Baju Kurung Dress</option>
+          <option value="kebaya dress">Kebaya Dress</option>
+          <option value="hanfu dress">Hanfu Dress</option>
+          <option value="ao dai dress">Ao Dai Dress</option>
+          <option value="lehenga dress">Lehenga Dress</option>
+          <option value="kimonotoga dress">Kimono Toga Dress</option>
+          <option value="flapper dress">Flapper Dress</option>
+          <option value="teddy dress">Teddy Dress</option>
+          <option value="scuba dress">Scuba Dress</option>
+          <option value="prairie dress">Prairie Dress</option>
+          <option value="lingerie dress">Lingerie Dress</option>
+          <option value="loungewear dress">Loungewear Dress</option>
+          <option value="gypsy dress">Gypsy Dress</option>
+          <option value="bell sleeve dress">Bell Sleeve Dress</option>
+          <option value="princess dress">Princess Dress</option>
+          <option value="smock dress">Smock Dress</option>
+          <option value="poncho dress">Poncho Dress</option>
+        </select>
+      </div>
+
+
+
+      <div class="form-group">
+        <label for="maleOutfitType">Male Outfit Type:</label>
+        <select id="maleOutfitType">
+          <!-- Existing options -->
+          <option value="denim shirt and chinos">Denim Shirt and Chinos</option>
+          <option value="casual blazer and jeans">Casual Blazer and Jeans</option>
+          <option value="polo shirt and khakis">Polo Shirt and Khakis</option>
+          <option value="shorts and t-shirt">Shorts and T-Shirt</option>
+          <option value="linen shirt and trousers">Linen Shirt and Trousers</option>
+          <option value="cardigan and slacks">Cardigan and Slacks</option>
+          <option value="casual hoodie and sweatpants">Casual Hoodie and Sweatpants</option>
+          <option value="button-up shirt and cargo shorts">Button-up Shirt and Cargo Shorts</option>
+          <option value="waistcoat and jeans">Waistcoat and Jeans</option>
+          <option value="v-neck sweater and chinos">V-Neck Sweater and Chinos</option>
+          <option value="casual bomber jacket and joggers">Casual Bomber Jacket and Joggers</option>
+          <option value="dress shirt and dress pants">Dress Shirt and Dress Pants</option>
+          <option value="vest and jeans">Vest and Jeans</option>
+          <option value="sweatshirt and cargo pants">Sweatshirt and Cargo Pants</option>
+          <option value="denim jacket and khaki shorts">Denim Jacket and Khaki Shorts</option>
+          <option value="casual button-up shirt and Bermuda shorts">Casual Button-up Shirt and Bermuda Shorts</option>
+          <option value="tweed blazer and slacks">Tweed Blazer and Slacks</option>
+          <option value="casual hoodie and denim shorts">Casual Hoodie and Denim Shorts</option>
+          <option value="sweater vest and dress shirt">Sweater Vest and Dress Shirt</option>
+          <option value="sweatshirt and jogger pants">Sweatshirt and Jogger Pants</option>
+          <option value="denim shirt and cargo pants">Denim Shirt and Cargo Pants</option>
+          <option value="casual bomber jacket and chinos">Casual Bomber Jacket and Chinos</option>
+          <option value="casual polo shirt and shorts">Casual Polo Shirt and Shorts</option>
+          <option value="linen blazer and dress pants">Linen Blazer and Dress Pants</option>
+          <option value="button-up shirt and twill pants">Button-up Shirt and Twill Pants</option>
+          <option value="cardigan and chino shorts">Cardigan and Chino Shorts</option>
+          <option value="v-neck sweater and tailored trousers">V-Neck Sweater and Tailored Trousers</option>
+          <option value="casual hoodie and cargo shorts">Casual Hoodie and Cargo Shorts</option>
+          <option value="denim jacket and Bermuda shorts">Denim Jacket and Bermuda Shorts</option>
+          <option value="short-sleeve button-up shirt and jeans">Short-sleeve Button-up Shirt and Jeans</option>
+          <option value="tweed vest and slacks">Tweed Vest and Slacks</option>
+          <option value="casual bomber jacket and denim shorts">Casual Bomber Jacket and Denim Shorts</option>
+          <!-- Add more male outfit options as needed -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="dressColor">Outfit Color:</label>
+        <select id="dressColor">
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="yellow">Yellow</option>
+          <option value="black">Black</option>
+          <option value="white">White</option>
+          <option value="pink">Pink</option>
+          <option value="purple">Purple</option>
+          <option value="orange">Orange</option>
+          <option value="gray">Gray</option>
+        </select>
+      </div>
+
+
+
+
+      <div class="form-group">
+        <label for="place">Place:</label>
+        <select id="place">
+          <option value="plain">Plain Background</option>
+          <option value="beach">Beach Background</option>
+          <option value="forest">Forest Background</option>
+          <option value="city">City Background</option>
+          <option value="mountain">Mountain Background</option>
+          <option value="desert">Desert Background</option>
+          <option value="countryside">Countryside Background</option>
+        </select>
+      </div>
+
+      <!-- Time -->
+      <div class="form-group">
+        <label for="time">Time:</label>
+        <select id="time">
+          <option value="daytime">Daytime</option>
+          <option value="night">Night</option>
+          <option value="sunset time">Sunset</option>
+          <option value="dawn time">Dawn</option>
+          <option value="dusk time">Dusk</option>
+          <option value="midnight ,star">Midnight</option>
+        </select>
+      </div>
+
+
+
+      <!-- Emotion -->
+      <div class="form-group">
+        <label for="emotion">Emotion:</label>
+        <select id="emotion">
+          <option value="happy">Happy</option>
+          <option value="angry">Angry</option>
+          <option value="sad">Sad</option>
+          <option value="excited">Excited</option>
+          <option value="calm">Calm</option>
+          <option value="fearful">Fearful</option>
+          <option value="surprised">Surprised</option>
+        </select>
+      </div>
+
+
+
+
+
+      <div class="form-group">
+        <label for="lighting">Lighting:</label>
+        <select id="lighting">
+          <option value="natural">Natural Light</option>
+          <option value="studio">Studio Light</option>
+          <option value="ambient">Ambient Light</option>
+          <option value="flash">Flash Light</option>
+          <option value="backlight">Backlight</option>
+          <option value="candle">Candle Light</option>
+          <option value="dusk">Dusk Light</option>
+          <option value="overhead">Overhead Light</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="windCondition">Wind Condition:</label>
+        <select id="windCondition">
+          <option value="calm">Calm</option>
+          <option value="breezy">Breezy</option>
+          <option value="windy">Windy</option>
+          <option value="gusty">Gusty</option>
+          <option value="stormy">Stormy</option>
+          <option value="hurricane">Hurricane</option>
+          <option value="tornado">Tornado</option>
+          <option value="gale-force">Gale Force</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="locationType">Location Type:</label>
+        <select id="locationType">
+          <option value="city">City</option>
+          <option value="suburb">Suburb</option>
+          <option value="rural">Rural</option>
+          <option value="beach">Beach</option>
+          <option value="mountain">Mountain</option>
+          <option value="forest">Forest</option>
+          <option value="desert">Desert</option>
+          <option value="countryside">Countryside</option>
+        </select>
+      </div>
+
+
+      <div class="form-group">
+        <label for="ownPrompt">Own Prompt:</label>
+        <input type="text" id="ownPrompt" placeholder="Enter your own prompt">
+      </div>
+
+
+
+
+
+
+
+
+      <button type="submit" class="custom-button">Submit</button>
+    </form>
+  </div>
+
+
+
+  <div class="container">
+    <div id="image-container" class="row"></div>
+  </div>
+  <script>
+
+
+
+window.onload = function() {
+          fetch(`/useritemshow`)
+            .then(response => response.json())
+            .then(data => {
+              var userItems = data.user_items;
+      
+              var imageContainer = document.getElementById("image-container");
+      
+              userItems.forEach(function(userItem) {
+                var imageUrlsString = userItem.image;
+                console.log(imageUrlsString);
+                var imageUrls = JSON.parse(imageUrlsString.replace(/'/g, '"'));
+      
+                if (Array.isArray(imageUrls)) {
+                  imageUrls.forEach(function(imageUrl, index) {
+                    var colDiv = document.createElement("div");
+                    colDiv.className = "col-md-3";
+      
+                    var img = document.createElement("img");
+                    img.src = imageUrl;
+                    img.classList.add("img-fluid", "shadow-1-strong", "rounded", "mb-4");
+                    img.alt = "Image";
+      
+                    var downloadButton = document.createElement("button");
+                    downloadButton.className = "download-button";
+                    downloadButton.innerText = "Download";
+                    downloadButton.addEventListener("click", function() {
+                      downloadImage(imageUrl);
+                    });
+                    
+                    colDiv.appendChild(img);
+                    colDiv.appendChild(downloadButton);
+                    imageContainer.appendChild(colDiv);
+                  });
+                } else {
+                  console.log("The imageUrls variable is not an array.");
+                }
+              });
+            })
+            .catch(error => console.log(error));
+        };
+      
+        function downloadImage(url) {
+          var link = document.createElement("a");
+          link.href = url;
+          link.download = "image.jpg";
+          link.style.display = "none";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+
+
+    const url = "https://stablediffusionapi.com/api/v4/dreambooth";
+
+
+    var modelId = '{{ modelid }}';
+
+    var user = '{{ user }}';
+
+
+
+
+
+
+
+
+
+
+
+
+    function handleSubmit(event) {
+      event.preventDefault(); // prevent form submission
+      const imageNumber = document.getElementById("imageNumber").value;
+      const imageType = document.getElementById("imageType").value;
+      const maledress = document.getElementById("maleOutfitType").value;
+      const ownPromptInput = document.getElementById('ownPrompt');
+
+
+      const dressColor = document.getElementById('dressColor').value;
+      const lighting = document.getElementById('lighting').value;
+      const windCondition = document.getElementById('windCondition').value;
+      const locationType = document.getElementById('locationType').value;
+      const place = document.getElementById('place').value;
+      const time = document.getElementById('time').value;
+      const emotion = document.getElementById('emotion').value;
+
+      const url = "https://stablediffusionapi.com/api/v4/dreambooth";
+      var modelId = '{{ modelid }}';
+      var user = '{{ user }}';
+
+      const ownPromptValue = ownPromptInput.value;
+
+
+
+      // If the ownPromptValue is empty (contains only spaces or nothing)
+      console.log("Own Prompt is empty.");
+      // Add your code or actions when the text field is empty
+
+      if (ownPromptValue.trim() === "") {
+        if (time === "night") {
+          var string5 = "" + dressColor + "," + imageType + "," + maledress+","+ lighting + "," + windCondition + "," + locationType + "," + place + "," + "," + emotion;
+          var string4 = "abir_rohan1811 person,night photography,city night,neon light," + string5 + "half body,detail face ,road light,street night,detailed, sharp, detailed face, magazine, photo, canon, nikon, focus, award winning photo,reminiscent of the works of Mario Testino, 35mm, F/2.8, insanely detailed and intricate, character, hypermaximalist, elegant, ornate, hyper realistic, super detailed, trending on flickr,masterpiece,fresh background,full body, best quality, high resolution, 8K UHD , HDR, bloom, sun light, raytracing , detailed shadows, intricate tree shadow, bokeh, depth of field, film photography, film grain, glare, (wind:0.8), detailed hair, beautiful face, ultra detailed eyes, cinematic lighting, (hyperdetailed:1.15), outdoors,happy face,ultra-realistic,clear facial features,natural features,captured with a phase one 35mm lens,f/ 3.2,agfa vista film ,film grain light,global illumination,intricate detail,wide shot,--upbeta --ar 4:5 --s 750 --q 2,natural lighting,RTX, professionally color graded, professional photography,fashion, high fashion, haute couture, add a touch of happiness to the scene dof, V4"
+
+          console.log("Night condition is true.");
+          // Add more code or actions specific to the "night" condition
+        } else {
+
+
+          var string1 = "abir_rohan1811 person,ed:1.15)";
+          var string2 = "," + imageType + ",";
+          var string3 = "abir_rohan1811 person,ed:1.15)" + string2 + ",detailed, sharp, detailed face, magazine, photo, canon, nikon, focus, award winning photo,reminiscent of the works of Mario Testino, 35mm, F/2.8, insanely detailed and intricate, character, hypermaximalist, elegant, ornate, hyper realistic, super detailed, trending on flickr,masterpiece,fresh background,full body, best quality, high resolution, 8K UHD , HDR, bloom, sun light, raytracing , detailed shadows, intricate tree shadow, bokeh, depth of field, film photography, film grain, glare, (wind:0.8), detailed hair, beautiful face, ultra detailed eyes, cinematic lighting, (hyperdetailed:1.15), outdoors,happy face,ultra-realistic,clear facial features,natural features,captured with a phase one 35mm lens,f/ 3.2,agfa vista film ,film grain light,global illumination,intricate detail,wide shot,--upbeta --ar 4:5 --s 750 --q 2,natural lighting,RTX, professionally color graded, professional photography,fashion, high fashion, haute couture, add a touch of happiness to the scene dof, V4";
+          var string5 = "," + time + "," + dressColor + " " + imageType + "," + maledress+" ," +lighting + "," + windCondition + "," + locationType + "," + place + "," + "," + emotion;
+          var string4 = "abir_rohan1811 person,ed:1.15)" + string5 + "detailed, sharp, detailed face, magazine, photo, canon, nikon, focus, award winning photo,reminiscent of the works of Mario Testino, 35mm, F/2.8, insanely detailed and intricate, character, hypermaximalist, elegant, ornate, hyper realistic, super detailed, trending on flickr,masterpiece,fresh background,full body, best quality, high resolution, 8K UHD , HDR, bloom, sun light, raytracing , detailed shadows, intricate tree shadow, bokeh, depth of field, film photography, film grain, glare, (wind:0.8), detailed hair, beautiful face, ultra detailed eyes, cinematic lighting, (hyperdetailed:1.15), outdoors,happy face,ultra-realistic,clear facial features,natural features,captured with a phase one 35mm lens,f/ 3.2,agfa vista film ,film grain light,global illumination,intricate detail,wide shot,--upbeta --ar 4:5 --s 750 --q 2,natural lighting,RTX, professionally color graded, professional photography,fashion, high fashion, haute couture, add a touch of happiness to the scene dof, V4"
+        }
+
+      }
+
+      else {
+        // If the ownPromptValue is not empty
+        string4 = "abir_rohan1811 person,ed:1.15)" + ownPromptValue;
+        // Add your code or actions when the text field is not empty
+      }
+
+
+
+      console.log(string4)
+
+      // Concatenate the strings
+      var concatenatedString = string4;
+
+      const payload = JSON.stringify({
+        key: "KhwsDivKGA4dhHDlbZQcVeGojvjTjIMNCebIV6iImfvgWPHpyW0E8ZWAjK33",
+
+        model_id: modelId,
+        prompt: concatenatedString,
+        negative_prompt: "(worst quality:2.00), full body,(low quality:2.00), (normal quality:2.00), low-res,deformed face,(deformed iris, deformed pupils, semi-realistic, CGI, 3D, render, sketch, cartoon, drawing, anime:1.4), text, close up, cropped, out of frame, worst quality, low quality, JPEG artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck,blurry background,dslr,portrait,dark face,dark eye,make up,fat face, easynegative,flat face,red skin,bad skin, wrinkles, pustules, skin spots, acne, skin blemishes, age spots, ugly, duplicate, morbid, mutilated, bad hands, cartoon, low poly, text, signature, watermark, username, ramparts,3d, midriff, nipples, canvas frame,bad art,weird colors,cloned face,Photoshop, video game, tiling, cross-eye, body out of frame, 3d render,gross body proportions,long neck, noise, artifacts, dithering,sad face,dark shadow face, weird nose,weird teeth, close up,overexposed",
+
+        height: "640",
+        samples: "1",
+        num_inference_steps: "30",
+        safety_checker: "no",
+        enhance_prompt: "no",
+        seed: null,
+        guidance_scale: 7.5,
+        multi_lingual: "no",
+        panorama: "no",
+        self_attention: "no",
+        upscale: "no",
+        embeddings_model: null,
+        lora_model: null,
+        scheduler: "UniPCMultistepScheduler",
+        webhook: null,
+        track_id: null
+      });
+
+
+      const sendPostRequest = async () => {
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            body: payload,
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          const data = await response.json();
+          console.log(data)
+          const dataa = {
+            "user": user,
+            "modelid": modelId,
+            "image": data.output
+            // Other data properties
+          };
+
+
+          fetch(`/useritemstore`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              'X-CSRFToken': '{{ csrf_token }}',
+            },
+            body: JSON.stringify(dataa),
+          })
+            .then((response) => response.json())
+            .then((responseData) => {
+              console.log("Response:", responseData);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+
+          return data;
+
+        }
+        catch (error) {
+          console.error('Error:', error);
+        }
+      };
+
+
+
+
+
+
+
+
+      const sendMultipleRequests = async (imageNumber) => {
+        const loadingAnimation = document.querySelector('.loading-animation');
+        loadingAnimation.classList.add('show');
+
+        const requestPromises = [];
+        for (let i = 0; i < imageNumber; i++) {
+          requestPromises.push(sendPostRequest());
+        }
+        await Promise.all(requestPromises);
+
+        loadingAnimation.classList.remove('show');
+
+      
+
+      };
+
+      sendMultipleRequests(imageNumber);
+
+
+
+
+
+
+
+
+
+
+      console.log(`Number of Images: ${imageNumber}, Image Type: ${imageType}`);
+    }
+
+
+  </script>
+ {% endblock %}
