@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transcription Result</title>
+</head>
+<body>
+    <h1>Transcription Result</h1>
+
+    <h2>Topics:</h2>
+    <ul>
+        {% for topic in topics_transcription %}
+            <li>{{ topic }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Transcription Text:</h2>
+    <p>{{ transcription_text }}</p>
+
+  
+
+    <ul>
+        {% for topic in topics_transcription %}
+            <li>
+                <ul>
+                    {% for word in topic.1 %}
+                        <li><a href="http://127.0.0.1:7000/youtube_search/{{ word }}/">{{ word }}/</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

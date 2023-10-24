@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Packages</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<style>
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.package-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 10px;
+}
+
+h2 {
+    color: #333;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+.buy-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.buy-btn:hover {
+    background-color: #0056b3;
+}
+
+
+
+</style>
+<body>
+    <div class="package-container">
+        <div class="card">
+            <h2>Basic Package</h2>
+            <p>PAKAGE 1</p>
+            <ul>
+                <li>100 PHOTOs</li>
+                <li>1 model</li>
+            </ul>
+            <a href="{% url 'packege1' %}" class="buy-btn">Buy Now</a>
+        </div>
+
+        <div class="card">
+            <h2>Standard Package</h2>
+            <p>pakage 2</p>
+            <ul>
+                <li>200 PHOTOs</li>
+                <li>1 model</li>
+            </ul>
+            <a href="{% url 'packege2' %}" class="buy-btn">Buy Now</a>
+        </div>
+
+        <div class="card">
+            <h2>Premium Package</h2>
+            <p>pakage 3</p>
+            <ul>
+                <li>300 PHOTOS</li>
+                <li>2 models</li>
+            </ul>
+            <a href="{% url 'packege3' %}" class="buy-btn">Buy Now</a>
+        </div>
+    </div>
+</body>
+</html>
