@@ -39,11 +39,25 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 
 from django.conf import settings
-
+import moviepy.editor as mp
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
 BASE_DIR = settings.BASE_DIR
+from google.oauth2 import service_account
+import re
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
 
 
 
+import re
+import moviepy.editor as mp
+from moviepy.video.io.ffmpeg_tools import ffmpeg_extract_audio
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from gensim import corpora
+import gensim
+from google.cloud import speech
+from django.shortcuts import render
+from pydub import AudioSegment
 
 @login_required
 def index(request):
@@ -385,74 +399,88 @@ def upload_video(request):
 
 # ... (previous code)
 
+
 def convert_video_to_audio(request):
     if request.method == 'POST' and request.FILES.get('video'):
         video_file = request.FILES['video']
-        audio_path = 'converted_audio.mp3'  # Path to store the converted audio
+        audio_path = 'converted_audio.wav'  # Path to store the converted audio
 
+        # Extract audio from the video using moviepy
         video_clip = VideoFileClip(video_file.temporary_file_path())
         audio_clip = video_clip.audio
+        audio_clip.write_audiofile(audio_path, codec='pcm_s16le')
 
-        # Specify the target audio codec and format
-        audio_codec = 'mp3'
-        audio_format = 'mp3'
-        audio_clip.write_audiofile(audio_path, codec=audio_codec, fps=audio_clip.fps, write_logfile=True)
+        # Split the audio into smaller segments (e.g., 10 seconds each)
+        segment_duration = 10  # You can adjust this as needed
+        audio_clip = AudioSegment.from_wav(audio_path)
+        segments = []
 
-        # Transcribe audio using Google Cloud Speech-to-Text
-        client = speech.SpeechClient()
-        with open(audio_path, 'rb') as audio_file:
-            content = audio_file.read()
+        for i in range(0, len(audio_clip), segment_duration * 1000):
+            segment = audio_clip[i:i + (segment_duration * 1000)]
+            segments.append(segment)
 
-        audio = speech.RecognitionAudio(content=content)
-        config = speech.RecognitionConfig(
-            encoding=speech.RecognitionConfig.AudioEncoding.MP3,  # Specify MP3 encoding
-            sample_rate_hertz=16000,
-            language_code="en-US",
-        )
-
-        response = client.recognize(config=config, audio=audio)
+        # Initialize transcription text
         transcription_text = ''
-        for result in response.results:
-            transcription_text += result.alternatives[0].transcript + ' '
 
+        # Transcribe each audio segment and accumulate the text
+        client = speech.SpeechClient()
+        for segment in segments:
+            # Convert stereo audio to mono
+            segment = segment.set_channels(1)
+
+            # Save each segment as a temporary WAV file
+            with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_audio_file:
+                segment.export(temp_audio_file.name, format="wav")
+
+                # Read the binary content of the temporary WAV file
+                with open(temp_audio_file.name, 'rb') as audio_file:
+                    audio_data = audio_file.read()
+
+                # Pass the binary content to the Speech-to-Text API
+                audio = speech.RecognitionAudio(content=audio_data)
+                config = speech.RecognitionConfig(
+                    encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+                    sample_rate_hertz=segment.frame_rate,
+                    language_code="en-US",
+                )
+
+                response = client.recognize(config=config, audio=audio)
+                for result in response.results:
+                    transcription_text += result.alternatives[0].transcript + ' '
+
+        # Perform topic modeling on the transcribed text
         stop_words = set(stopwords.words('english'))
         transcription_tokens = [word for word in word_tokenize(transcription_text.lower()) if word not in stop_words]
 
-        # Create a dictionary representation of the transcribed tokens.
+        # Create a dictionary representation of the transcribed tokens
         transcription_dictionary = corpora.Dictionary([transcription_tokens])
 
-        # Convert the dictionary into a document-term matrix.
+        # Convert the dictionary into a document-term matrix
         transcription_corpus = [transcription_dictionary.doc2bow(transcription_tokens)]
 
-        # Generate the LDA model for the transcription.
+        # Generate the LDA model for the transcription
         ldamodel_transcription = gensim.models.ldamodel.LdaModel(transcription_corpus, num_topics=15, id2word=transcription_dictionary, passes=15)
 
         topics_transcription = ldamodel_transcription.print_topics(num_words=6)
 
-
-
-        #experiment
-
+        # Extract topics with associated words
         topics_with_words = []
         word_pattern = re.compile(r'"([^"]+)"')
 
         for entry in topics_transcription:
             words = word_pattern.findall(entry[1])
             topics_with_words.append((entry[0], words))
-        
 
         # Prepare data to pass to the template
         context = {
             'topics_transcription': topics_with_words,
             'transcription_text': transcription_text,
-            
         }
 
         # Render the template with the context data
         return render(request, 'transcription_result.html', context)
 
     return render(request, 'convert.html')
-
 
 
 # def convert_video_to_audio(request):
