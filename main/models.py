@@ -37,7 +37,7 @@ class Video(models.Model):
     video_file = models.FileField(upload_to='videos/')
     mp3 = models.FileField(upload_to='mp3/',null =True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
-    transcription = models.CharField(max_length=1000,null= True)
+    transcription = models.CharField(max_length=1000000,null= True)
     all_topic = models.CharField(max_length=1000 ,null =True)
     def __str__(self):
         return self.title    

@@ -221,5 +221,5 @@ GOOGLE_CLOUD_PROJECT_ID = 'boxwood-well-400915'
 
 # settings.py
 
-YOUTUBE_API_KEY = 'AIzaSyDsWTTTLiA37XCvoZPRXAVcrK2rsbMt1bc'
+YOUTUBE_API_KEY = 'AIzaSyBAPu-trq0lfxO_3PbmdIgZ-fSKz2hYY3M'
 YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/search'

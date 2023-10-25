@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Detail</title>
+</head>
+
+<style>
+
+
+body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            background: #181718;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgb(33, 18, 109);
+            padding: 20px;
+            color: #fff;
+        }
+
+        .header input {
+            padding: 10px;
+            width: 50%;
+            font-size: 1em;
+            border-radius: 4px;
+            border: none;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .nav {
+            width: 200px;
+            height: 100%;
+            background: rgb(39, 20, 95);;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav ul li {
+            padding: 15px 0;
+            border-bottom: 1px solid #eeebf3;
+        }
+
+
+
+
+    .topics-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .topic {
+        background-color: blue;
+        color: white;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 5px 10px;
+    }
+
+    .word-link {
+        text-decoration: none;
+        color: white;
+    }
+
+
+    
+    .word-box {
+        display: inline-block;
+        background-color: blue;
+        color: white;
+        border-radius: 10px;
+        margin: 5px;
+        padding: 5px 10px;
+    }
+
+</style>
+
+
+
+
+
+
+
+
+
+<body>
+
+
+    <div class="header">
+        <h1>LEARNING MANAGE MENT SYSTEM</h1>
+        <input type="search" placeholder="Search">
+    </div>
+    <div class="video-container">
+        <video class="video" controls>
+            <source src="{{ video.video_file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h2>{{ video.title }}</h2>
+    </div>
+
+
+
+    <div class="word-container">
+        {% for word in topics_with_words.0.1 %}
+            <div class="word-box">
+                <a class="word-link" href="http://127.0.0.1:8000/youtube_search/{{ word }}/">{{ word }}</a>
+            </div>
+        {% endfor %}
+    </div
+
+    <!-- Add back button to return to the previous page -->
+    <a href="javascript:history.back()">Back</a>
+</body>
+</html>

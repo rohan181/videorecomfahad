@@ -476,6 +476,15 @@ def convert_video_to_audio(request):
             'topics_transcription': topics_with_words,
             'transcription_text': transcription_text,
         }
+        title = request.POST.get('title')
+
+        video = Video.objects.create(
+            title=title,
+            video_file=video_file,  # Assign the video file
+             # Assuming this is the path to your audio file
+            transcription=transcription_text,  # Store the transcription
+             # Store topics as text (you may want to format this differently)
+        )
 
         # Render the template with the context data
         return render(request, 'transcription_result.html', context)
@@ -548,7 +557,7 @@ def convert_video_to_audio(request):
 @login_required
 def videolist(request):
     
-    videos = Video.objects.all()
+    videos = Video.objects.all().order_by('-pk')
     return render(request, 'videolist.html', {'videos': videos})
 
 
@@ -586,6 +595,42 @@ def youtube_search(request, query):
 
     
 
+
+
+def video_detail(request, video_id):
+    video = get_object_or_404(Video, pk=video_id)
+
+    topics_transcription = None
+    topics_with_words = []
+    transcription_text=video.transcription
+    if video.transcription:
+
+
+        stop_words = set(stopwords.words('english'))
+        transcription_tokens = [word for word in word_tokenize(transcription_text.lower()) if word not in stop_words]
+
+        # Create a dictionary representation of the transcribed tokens
+        transcription_dictionary = corpora.Dictionary([transcription_tokens])
+
+        # Convert the dictionary into a document-term matrix
+        transcription_corpus = [transcription_dictionary.doc2bow(transcription_tokens)]
+
+        # Generate the LDA model for the transcription
+        ldamodel_transcription = gensim.models.ldamodel.LdaModel(transcription_corpus, num_topics=10, id2word=transcription_dictionary, passes=15)
+
+        topics_transcription = ldamodel_transcription.print_topics(num_words=20)
+        print(topics_transcription)
+        # Extract topics with associated words
+        topics_with_words = []
+        word_pattern = re.compile(r'"([^"]+)"')
+
+        for entry in topics_transcription:
+            words = word_pattern.findall(entry[1])
+            topics_with_words.append((entry[0], words))
+
+        
+
+    return render(request, 'video_detail.html', {'video': video, 'topics_transcription': topics_transcription, 'topics_with_words': topics_with_words})
 
 
 

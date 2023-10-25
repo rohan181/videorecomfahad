@@ -9,14 +9,14 @@
             padding: 0;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background: #F1F1F1;
+            background: #181718;
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgb(202, 180, 17);
+            background: rgb(33, 18, 109);
             padding: 20px;
             color: #fff;
         }
@@ -36,7 +36,7 @@
         .nav {
             width: 200px;
             height: 100%;
-            background: #fff;
+            background: rgb(72, 50, 136);;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
@@ -48,7 +48,7 @@
 
         .nav ul li {
             padding: 15px 0;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eeebf3;
         }
 
         .nav ul li:last-child {
@@ -67,7 +67,7 @@
             max-width: 350px;
             width: 100%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            background: #fff;
+            background:  rgb(72, 50, 136);
             border-radius: 5px;
             overflow: hidden;
             padding: 20px;
@@ -80,7 +80,7 @@
 
         .video-container h2 {
             padding: 10px 0;
-            color: #333;
+            color: #eae2e2;
             font-size: 1.2em;
         }
 
@@ -124,12 +124,13 @@
         <div class="main">
             {% for video in videos %}
                 <div class="video-container">
-                    <video class="video" controls>
-                        <source src="{{ video.video_file.url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <h2>{{ video.title }}</h2>
-                   
+                    <a href="{% url 'video_detail' video_id=video.id %}">
+                        <video class="video" controls>
+                            <source src="{{ video.video_file.url }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h2>{{ video.title }}</h2>
+                    </a>
                 </div>
             {% endfor %}
         </div>

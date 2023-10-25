@@ -28,7 +28,7 @@ urlpatterns = [
     path('videolist/', views.videolist, name='videolist'),
     path('upload/success/', views.upload_success, name='upload_success'),
 
-
+    path('video/<int:video_id>/', views.video_detail, name='video_detail'),
 
     path('convert/', views.convert_video_to_audio, name='convert_video_to_audio'),
     path('youtube_search/<str:query>/', views.youtube_search, name='youtube_search'),

@@ -5,14 +5,14 @@
     <title>YouTube Search Results</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            background-color: #141212;
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #3a32d1; /* Choose your preferred header background color */
-            color: #ffffff; /* Text color for the header */
+            background-color: #3a32d1;
+            color: #fff;
             text-align: center;
             padding: 20px;
         }
@@ -23,51 +23,58 @@
         ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         li {
-            background-color: #ffffff; /* Background color for each video result */
+            background-color: #fff;
             margin: 10px;
-            padding: 10px;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 320px;
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: scale(1.05);
         }
         h2 {
-            color: #333; /* Text color for video titles */
+            color: #333;
+            padding: 10px;
+            margin: 0;
         }
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
-            padding-top: 25px;
             height: 0;
         }
         .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
-            width: 50%;
-            height: 50%;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Recommendeded video"</h1>
+        <h1>Recommended Videos</h1>
     </header>
 
     <ul>
         {% for item in search_results %}
             {% if item.id.kind == 'youtube#video' %}
                 <li>
-                    <h2>{{ item.snippet.title }}</h2>
                     <div class="video-container">
                         <iframe
-                            width="560"
-                            height="315"
                             src="https://www.youtube.com/embed/{{ item.id.videoId }}"
                             frameborder="0"
                             allowfullscreen
                         ></iframe>
                     </div>
+                    <h2>{{ item.snippet.title }}</h2>
                 </li>
             {% endif %}
         {% empty %}
@@ -76,6 +83,7 @@
     </ul>
 </body>
 </html>
+
 
 
 
